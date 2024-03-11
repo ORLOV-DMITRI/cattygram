@@ -16,7 +16,7 @@ export default function SignUpForm() {
     const form = useForm<z.infer<typeof SignUpValidation>>({
         resolver: zodResolver(SignUpValidation),
         defaultValues: {
-            cattyName: "",
+            name: "",
             email: '',
             password: '',
         },
@@ -38,7 +38,7 @@ export default function SignUpForm() {
                 <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full mt-4">
                     <FormField
                         control={form.control}
-                        name="cattyName"
+                        name="name"
                         render={({field}) => (
                             <FormItem>
                                 <FormLabel>Имя котика</FormLabel>

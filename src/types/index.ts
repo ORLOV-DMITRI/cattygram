@@ -41,7 +41,7 @@ export type IUser = {
 };
 
 export type INewUser = {
-    cattyName: string;
+    name: string;
     email: string;
     password: string;
 };
