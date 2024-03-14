@@ -5,6 +5,7 @@ import SignUpForm from "./_auth/form/sign-up-form.tsx";
 import AuthLayout from "./_auth/auth-layout.tsx";
 import RootLayout from "./_root/root-layout.tsx";
 import {Home} from "@/_root/pages";
+import {Toaster} from "@/components/ui/toaster";
 
 export default function App() {
     return (
@@ -18,6 +19,7 @@ export default function App() {
                     <Route index element={<Home/>}/>
                 </Route>
             </Routes>
+            <Toaster/>
         </main>
     );
 };

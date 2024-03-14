@@ -1,21 +1,23 @@
 import {Button} from "@/components/ui/button.tsx";
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form";
-import {z} from "zod";
+import * as z from "zod";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input"
 import {SignUpValidation} from "@/lib/validation";
 import Loader from "@/components/shared/loader.tsx";
 import {Link} from "react-router-dom";
 import {createUserAccount} from "@/lib/appwrite/api.ts";
+import {useToast} from "@/components/ui/use-toast";
 
 
 export default function SignUpForm() {
     const isLoading = false;
-
+    const {toast} = useToast()
     const form = useForm<z.infer<typeof SignUpValidation>>({
         resolver: zodResolver(SignUpValidation),
         defaultValues: {
+            username: '',
             name: "",
             email: '',
             password: '',
@@ -23,9 +25,14 @@ export default function SignUpForm() {
     })
 
     async function onSubmit(values: z.infer<typeof SignUpValidation>) {
+        console.log(values)
         const newUser = await createUserAccount(values);
 
-        console.log(newUser)
+        if (!newUser) {
+            return toast({
+                title: "Ошибка регистрации",
+            })
+        }
     }
 
     return (
@@ -42,6 +49,19 @@ export default function SignUpForm() {
                         render={({field}) => (
                             <FormItem>
                                 <FormLabel>Имя котика</FormLabel>
+                                <FormControl>
+                                    <Input type={'text'} className={'shad-input'} {...field} />
+                                </FormControl>
+                                <FormMessage/>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="username"
+                        render={({field}) => (
+                            <FormItem>
+                                <FormLabel>Ваше имя</FormLabel>
                                 <FormControl>
                                     <Input type={'text'} className={'shad-input'} {...field} />
                                 </FormControl>
